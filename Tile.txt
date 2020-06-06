@@ -1,0 +1,42 @@
+package tile_same;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+public class Tile {
+
+public static Tile[] tiles = new Tile[256]; 
+public static Tile grasstile = new GrassTile(0);
+public static Tile dirtTile = new DirtTile(1);
+public static Tile stonetile = new StoneTile(2);
+
+public final static int TILE_WIDTH = 64;
+public final static int TILE_HEIGHT = 64;
+public  static final float HEIGHT = 64;
+
+public BufferedImage tile;
+public int id;
+
+public Tile(BufferedImage tile,int id) {
+	this.tile = tile;
+	this.id = id;
+	tiles[id] = this;
+  }
+
+public boolean isSolid() {
+	return false;
+}
+
+public int  getId() {
+	return id;
+}
+public void tick() {
+	
+}
+
+public void render(Graphics g,int x,int y) {
+	g.drawImage(tile,x,y,TILE_WIDTH,TILE_HEIGHT,null);
+	
+}
+
+}

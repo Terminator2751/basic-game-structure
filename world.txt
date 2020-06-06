@@ -1,0 +1,91 @@
+package tile_same;
+
+import java.awt.Graphics;
+
+
+public class World {
+	public Handler handler;
+	public int[][] world;
+	public int width,height,spawnX,spawnY;
+	public Game game;
+	public EntityManager entityManager;
+	public Player player;
+	public World(Handler handler,String path){
+		this.handler = handler;
+		player = new Player(handler,100,100);
+		entityManager = new EntityManager(handler,player);
+		entityManager.addEntity(new Tree(handler,100,250));
+		entityManager.addEntity(new Tree(handler,100,450));
+		entityManager.addEntity(new Tree(handler,200,650));
+		entityManager.addEntity(new Tree(handler,1000,250));
+		entityManager.addEntity(new Tree(handler,1000,250));
+		entityManager.addEntity(new Tree(handler,1000,450));
+		entityManager.addEntity(new Tree(handler,1000,650));
+		LoadWorld(path);
+		entityManager.getPlayer().setX(spawnX);
+		entityManager.getPlayer().setY(spawnY);
+	}
+	
+	public void tick() {
+		entityManager.tick();
+	}
+	
+	public void render(Graphics g) {
+		
+		int xStart= (int) Math.max(0, handler.getGameCamera().getxOffset() / Tile.TILE_WIDTH );
+		int xEnd = (int) Math.min(width, (handler.getGameCamera().getxOffset() + handler.getwidth())/Tile.TILE_WIDTH +1 );
+		int yStart = (int) Math.max(0, handler.getGameCamera().getyOffset() / Tile.TILE_HEIGHT );
+		int yEnd = (int) Math.min(height, (handler.getGameCamera().getyOffset() + handler.getHeight()) / Tile.TILE_HEIGHT +1);
+		for(int y=yStart;y<yEnd;y++) {
+			for(int x=xStart;x<xEnd;x++) {
+				getTile(x,y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getGameCamera().getxOffset()),(int)(y * Tile.TILE_HEIGHT
+						- handler.getGameCamera().getyOffset()));
+			}
+		}
+		entityManager.render(g);
+	}
+	
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public Tile getTile(int x,int y) {
+		
+		
+		if(x<0|| y<0 || x>=width || x>=height) {
+			return Tile.grasstile;
+		}
+		
+		Tile t = Tile.tiles[world[x][y]];
+		if(t == null) {return Tile.dirtTile;}
+		return t;
+	}
+	
+	public void LoadWorld(String path) {
+		String file = Utility.LoadFileAsString(path);
+		String[] tokens = file.split("\\s+");
+		
+		width = Utility.parseInt(tokens[0]);
+		height = Utility.parseInt(tokens[1]);
+		spawnX = Utility.parseInt(tokens[2]);
+		spawnY = Utility.parseInt(tokens[3]);
+		
+		world = new int[width][height];
+		for(int y=0;y<height;y++) {
+			for(int x=0;x<width;x++) {
+				world[x][y] = Utility.parseInt(tokens[(x+y* width)+4]);
+			}
+		}
+	}
+
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+}
+
+
+

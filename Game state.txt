@@ -1,0 +1,25 @@
+package tile_same;
+
+import java.awt.Graphics;
+
+public class GameState extends State {
+	public World world;
+	public GameState(Handler handler){
+		super(handler);
+		world = new World(handler,"C:\\Users\\Ashok Shah\\Desktop\\Eclipse_files_\\game_\\res\\worlds\\world_1.txt");
+		handler.setWorld(world);
+
+	}
+
+	public void tick() {
+		world.tick();
+
+	}
+
+
+	public void render(Graphics g) {
+		world.render(g);
+
+	}
+
+}

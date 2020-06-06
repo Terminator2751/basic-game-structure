@@ -1,0 +1,6 @@
+package tile_same;
+
+
+public interface UI{
+	public void onClick(); 
+}

@@ -1,0 +1,42 @@
+package tile_same;
+
+public class Handler {
+	public Game game;
+	public World world;
+	public Handler(Game game){
+		this.game = game;
+	}
+	
+	public MouseManager getMouseManager() {
+		return game.getMouseManager();
+	}
+	
+	public KeyManager getKeyManager() {
+		return game.getkeyManager();
+	}
+	
+	public GameCamera getGameCamera() {
+		return game.getGamecamera();
+	}
+	
+	public int getHeight() {
+		return game.getHeight();
+	}
+	
+	public int getwidth() {
+		return game.getWidth();
+	}
+	
+	public Game getGame() {
+		return game;
+	}
+	public void setGame(Game game) {
+		this.game = game;
+	}
+	public World getWorld() {
+		return world;
+	}
+	public void setWorld(World world) {
+		this.world = world;
+	}
+}

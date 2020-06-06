@@ -1,0 +1,62 @@
+package tile_same;
+
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+public class UI_Manager{
+	public Handler handler;
+	public ArrayList<UIobject> objects;
+	UI_Manager(Handler handler){
+		this.handler = handler;
+		objects = new ArrayList<UIobject>(); 
+	}
+	
+	public void tick() {
+		for(UIobject o: objects) {
+			o.tick();
+		}
+	}
+	
+	public void render(Graphics g) {
+		for(UIobject o:objects) {
+			o.render(g);
+		}
+	}
+	
+	public void onMouseMove(MouseEvent e) {
+		for(UIobject o:objects) {
+			o.onMouseMove(e);;
+		}
+	}
+	
+	public void onMouseReleased(MouseEvent e) {
+		for(UIobject o:objects) {
+			o.onMouseReleased(e);
+		}
+	}
+	
+	public void addUIobject(UIobject o) {
+		objects.add(o);
+	}
+	
+	public void removeUIobject(UIobject o) {
+		objects.remove(o);
+	}
+
+	public Handler getHandler() {
+		return handler;
+	}
+
+	public void setHandler(Handler handler) {
+		this.handler = handler;
+	}
+
+	public ArrayList<UIobject> getObjects() {
+		return objects;
+	}
+
+	public void setObjects(ArrayList<UIobject> objects) {
+		this.objects = objects;
+	}
+}

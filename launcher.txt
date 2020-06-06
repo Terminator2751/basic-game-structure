@@ -1,0 +1,12 @@
+package tile_same;
+
+public class Launcher {
+	
+
+	
+	public static void main(String [] args) {
+		Game game = new Game("tiles game",640,400);
+		game.start();
+	}
+
+}

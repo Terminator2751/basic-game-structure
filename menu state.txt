@@ -1,0 +1,32 @@
+package tile_same;
+
+import java.awt.Graphics;
+
+public class MenuState extends State {
+	public UI_Manager uiManager;
+	public MenuState(Handler handler) {
+		super(handler);
+		uiManager = new UI_Manager(handler);
+		handler.getMouseManager().setUI_manager(uiManager);
+		uiManager.addUIobject(new UIbutton(200,200,128,64,Assets.button_start,new UI() {
+
+			@Override
+			public void onClick() {
+				uiManager = null;
+				State.setState(handler.getGame().gamestate);
+				
+			}}));
+	}
+
+	
+	public void tick() {
+		
+		uiManager.tick();
+	}
+	
+
+	
+	public void render(Graphics g) {
+		uiManager.render(g);
+	}
+}

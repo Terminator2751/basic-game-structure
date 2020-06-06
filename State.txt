@@ -1,0 +1,18 @@
+package tile_same;
+import java.awt.*;
+public abstract class State {
+	public static State currentstate = null;
+	public Game game;
+	public Handler handler;
+	public static void setState(State state) {
+		currentstate = state;
+	}
+	public static State getState() {
+		return currentstate;
+	}
+	public State(Handler handler) {
+		this.handler = handler;
+	}
+	public abstract void tick();
+	public abstract void render(Graphics g);
+}

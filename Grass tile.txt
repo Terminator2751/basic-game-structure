@@ -1,0 +1,9 @@
+package tile_same;
+
+public class GrassTile extends Tile{
+
+	public GrassTile( int id) {
+		super(Assets.grass, id);
+	}
+	
+}

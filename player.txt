@@ -1,0 +1,76 @@
+package tile_same;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+public class Player extends Creature {
+	public Animations down_animation;
+	public Animations up_animation;
+	public Animations left_animation;
+	public Animations right_animation;
+	public Player(Handler handler,float x, float y) {
+		super(handler,x, y,Creature.DEFALUT_WIDTH,Creature.DEFAULT_HEIGHT);
+		bounds.x = 16;
+		bounds.y = 0;
+		bounds.width = 32;
+		bounds.height = 60;
+		
+		down_animation  = new Animations(500,Assets.player_dwon);
+		up_animation    = new Animations(500,Assets.player_up);
+		left_animation  = new Animations(500,Assets.player_left);
+		right_animation = new Animations(500,Assets.player_right);
+	}
+
+	@Override
+	public void tick() {
+		down_animation.tick();
+		up_animation.tick();
+		left_animation.tick();
+		right_animation.tick();
+		getInput();
+		move();
+		handler.getGameCamera().centerOnEntity(this);
+	}
+	
+	public void getInput() {
+		
+		Xmove = 0;
+		Ymove = 0;
+		
+		if(handler.getKeyManager().up) {
+			Ymove = -speed;
+		}
+		if(handler.getKeyManager().down) {
+			Ymove = +speed;
+		}
+		if(handler.getKeyManager().left) {
+			Xmove = -speed;
+		}
+		if(handler.getKeyManager().right) {
+			Xmove = +speed;
+		}
+	}
+
+	@Override
+	public void render(Graphics g) {
+		g.drawImage(getCurrentAnimation(), (int)(x -handler.getGameCamera().getxOffset() ),(int)(y - handler.getGameCamera().getyOffset()),width,height,null);
+
+	}
+	public BufferedImage getCurrentAnimation() {
+		if(Xmove > 0) {
+			return right_animation.getcurrentframe();
+		}else if(Xmove < 0) {
+			return left_animation.getcurrentframe();
+		}else if(Ymove < 0) {
+			return up_animation.getcurrentframe();
+		}else if(Ymove > 0) {
+			return down_animation.getcurrentframe();
+		}else {
+			return Assets.player_dwon[0];
+		}
+	}
+	
+	
+
+}
